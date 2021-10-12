@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="home__playlists">
+  {% for deck in decks %}
+
+      <div class="playlist mb-5">
+        <h3 class="title is-3 has-text-success">{{deck.title}}</h3>
+        <hr />
+
+        {% for card in deck.cards.all %}
+
+            <div class="song">
+                <span>{{forloop.counter}}</span>
+                <span><b>{{card.name}}</b></span>
+                <span>
+                    <a
+                        href="{% url 'deck_card_assoc' deck.pk card.pk %}?assoc=remove"
+                        class="button is-danger is-outlined"
+                    >
+                        <span class="icon is-small">
+                            <i class="fas fa-times"></i>
+                        </span>
+                    </a>
+                </span>
+            </div>
+
+        {% endfor %}
+      </div>
+
+  {% endfor %}
+</div>
+
+{% endblock %}

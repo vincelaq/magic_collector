@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+
+{% block title %}{{header}}{% endblock  %}
+
+{% block content %}
+
+<h1 class="title text-2xl">{{header}}</h1>
+
+<form class="mb-5" method="get">
+  <div class="field has-addons">
+    <div class="control">
+      <!--  Our input will search by name of artist  -->
+      <input class="input" type="text" name="name" placeholder="name" />
+    </div>
+    <div class="control">
+      <input class="button is-success" type="submit" value="Search" />
+    </div>
+  </div>
+  <!--  This anchor tag will redirect back to artist list without a query param -->
+  <a class="button is-dark" href="{% url 'card_list' %}">Clear Search</a>
+</form>
+
+<div class="gallery flex justify-evenly bg-blue-300">
+  {% for card in cards %}
+  <a href="{% url 'card_detail' card.pk %}">
+    <div class="card bg-yellow-100 w-6- m-20">
+      <div class="card-image">
+        <figure class="image is square">
+          <img src="{{card.image}}" alt="{{card.name}}" />
+        </figure>
+      </div>
+      <div class="card-header">
+        <p class="card-header-title">{{card.name}}</p>
+      </div>
+    </div>
+  </a>
+	{% empty %}
+  <article class="message">
+    <div class="message-header">
+      <p>No Cards Available</p>
+    </div>
+  </article>
+  {% endfor %}
+  <a class="button is-dark" href="{% url 'card_create' %}">Add Card</a>
+</div>
+{% endblock %}

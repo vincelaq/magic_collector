@@ -1,0 +1,58 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="detail__img">
+  <img src="{{card.image}}" alt="{{card.name}}" />
+</div>
+<div class="detail__name">
+  <h1 class="title">{{card.name}}</h1>
+</div>
+<div class="detail__container">
+  <div class="buttons">
+    <a href="{% url 'card_update' card.pk %}" class="button is-info">
+      <span class="icon">
+        Edit
+      </span>
+    </a>
+    <a href="{% url 'card_delete' card.pk %}" class="button is-danger">
+      <span class="icon">
+       Delete
+      </span>
+    </a>
+    <span>
+        <div class="dropdown">
+          <div class="dropdown-trigger">
+            <button
+              class="button"
+              aria-haspopup="true"
+              aria-controls="dropdown-menu"
+            >
+              <span>Add to Deck</span>
+              <span class="icon is-small">
+                <i class="fas fa-angle-down" aria-hidden="true"></i>
+              </span>
+            </button>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              {% for deck in decks %}
+           <!-- each playlist becomes a drop
+           down item with the ids needed to add to the join table  -->
+              <a
+                href="{% url 'deck_card_assoc' deck.pk card.pk %}?assoc=add"
+                class="dropdown-item"
+              >
+                {{deck.title}}
+              </a>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </span>
+  </div>
+  <div class="detail__about">
+    <h4 class="title is-4">About</h4>
+    <p>{{card.text}}</p>
+  </div>
+</div>
+
+{% endblock %}
